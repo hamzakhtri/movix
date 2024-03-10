@@ -13,22 +13,25 @@ import Explore from "./pages/explore/Explore";
 
 function App() {
 
-  // getData 
-
   const dispatch = useDispatch();
   const data = useSelector((state) => state.home.url);
 
-  const apiData = () => {
-    fetchDataFromApi('/movie/popular', { page: 3 })
+  const fetchApiConfig = () => {
+
+    fetchDataFromApi('/configuration')
       .then((resp) => {
-        console.log(resp);
-        dispatch(setApiConfiguration(resp));
+
+        const url = {
+          backdrop: resp.images.secure_base_url + "original",
+          poster: resp.images.secure_base_url + "original",
+          profile: resp.images.secure_base_url + "original",
+        }
+        dispatch(setApiConfiguration(url));
       })
   };
 
   useEffect(() => {
-    apiData();
-    console.log(data);
+    fetchApiConfig();
   }, [])
 
   return (
