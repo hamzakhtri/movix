@@ -13,7 +13,7 @@ const HeroBanner = () => {
     const { backdrop } = useSelector((state) => state.home.url);
     const navigate = useNavigate();
 
-    const { data, loading } = useFetch("/movie/upcoming");
+    const { data, loading } = useFetch("/movie/popular");
 
     const searchQueryHandler = (event) => {
         if (event.key === "Enter" && query.length > 0) {
@@ -22,12 +22,17 @@ const HeroBanner = () => {
     }
 
     useEffect(() => {
-
-        const bg = backdrop + data?.results[Math.floor(Math.random() * 19)]?.backdrop_path;
-        setBackground(backdrop + bg);
-        console.log(bg);
-
-    }, [data])
+        if (data &&  backdrop) {
+            const randomIndex = Math.floor(Math.random() * data.results.length);
+            const randomBackdrop = data.results[randomIndex].backdrop_path;
+            if (randomBackdrop) {
+                const bg = backdrop + randomBackdrop;
+                setBackground(bg);
+                console.log(bg);
+                console.log(backdrop);
+            }
+        }
+    }, [data, backdrop]);
 
     return (
         <div className='heroBanner'>
