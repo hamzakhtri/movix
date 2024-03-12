@@ -5,10 +5,7 @@ import { SlMenu } from "react-icons/sl"
 import { VscChromeClose } from "react-icons/vsc"
 import ContentWrapper from "../contentWrapper/ContentWrapper"
 import { useNavigate, useLocation } from "react-router-dom"
-
-
 import "./style.scss"
-
 
 const Header = () => {
 
@@ -39,15 +36,46 @@ const Header = () => {
     }
   }
 
+  const navigationHandler = (type) => {
+    if (type === "movie") {
+      navigate("explore/movie");
+    } else {
+      navigate("explore/tv");
+    }
+    setMobileMenu(false);
+  }
+
+  const controlNavScroll = () => {
+    if (window.scrollY > 200) {
+      if (window.scrollY > lastScrollY) {
+        setShow("hide");
+      } else {
+        setShow("show");
+      }
+    } else {
+      setShow("top");
+    }
+    setLastScrollY(window.scrollY);
+  }
+
+  useEffect(() => {
+    window.addEventListener("scroll", controlNavScroll);
+    return (() => window.removeEventListener("scroll", controlNavScroll));
+  }, [lastScrollY]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location])
+
   return (
     <header className={`header ${mobileMenu ? "mobileView" : ""} ${show}`}>
       <ContentWrapper>
         <div className="logo">
-          <img src={logo} alt="brand logo" />
+          <img onClick={() => navigate("/")} src={logo} alt="brand logo" />
         </div>
         <ul className="menuItems">
-          <li className="menuItem">Movies</li>
-          <li className="menuItem">TV Shows</li>
+          <li className="menuItem" onClick={() => navigationHandler("movie")}>Movies</li>
+          <li className="menuItem" onClick={() => navigationHandler("tv")}>TV Shows</li>
           <li className="menuItem">
             <HiOutlineSearch onClick={openSearch} />
           </li>
@@ -67,7 +95,6 @@ const Header = () => {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 onKeyUp={searchQueryHandler}
-
               />
               <VscChromeClose onClick={() => setShowSearch(false)} />
             </div>

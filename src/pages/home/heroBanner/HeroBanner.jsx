@@ -22,14 +22,12 @@ const HeroBanner = () => {
     }
 
     useEffect(() => {
-        if (data &&  backdrop) {
+        if (data && backdrop) {
             const randomIndex = Math.floor(Math.random() * data.results.length);
             const randomBackdrop = data.results[randomIndex].backdrop_path;
             if (randomBackdrop) {
                 const bg = backdrop + randomBackdrop;
                 setBackground(bg);
-                console.log(bg);
-                console.log(backdrop);
             }
         }
     }, [data, backdrop]);
@@ -40,9 +38,7 @@ const HeroBanner = () => {
                 <div className="backdrop-img">
                     <Img src={background} />
                 </div>}
-
             <div className="opacity-layer"></div>
-
             <ContentWrapper>
                 <div className="heroBannerContent">
                     <h1 className='title'>Welcome.</h1>
@@ -56,7 +52,6 @@ const HeroBanner = () => {
                             value={query}
                             onChange={(e) => setQuery(e.target.value)}
                             onKeyUp={searchQueryHandler}
-
                         />
                         <button>Search</button>
                     </div>

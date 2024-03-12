@@ -7,9 +7,12 @@
     display: flex;
     align-items: center;
     position: relative;
+    margin-bottom: 50px;
 
     @include md {
         height: 700px;
+        margin-bottom: 80px;
+
     }
 
     .backdrop-img {

@@ -14,13 +14,10 @@ import Explore from "./pages/explore/Explore";
 function App() {
 
   const dispatch = useDispatch();
-  const data = useSelector((state) => state.home.url);
-
+  
   const fetchApiConfig = () => {
-
     fetchDataFromApi('/configuration')
       .then((resp) => {
-
         const url = {
           backdrop: resp.images.secure_base_url + "original",
           poster: resp.images.secure_base_url + "original",
@@ -45,7 +42,7 @@ function App() {
           <Route path="/explore/:mediaType" element={<Explore />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
-        {/* <Footer /> */}
+        <Footer />
       </BrowserRouter>
     </>
   )
